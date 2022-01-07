@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.19.1" />
+    <PackageReference Include="Grpc.Tools" Version="2.43.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Proto.Actor" Version="0.26.0" />
+    <PackageReference Include="Proto.Remote" Version="0.26.0" />
+    <PackageReference Include="Proto.Remote.GrpcNet" Version="0.26.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="MyProtos.proto" GrpcServices="None" />
+  </ItemGroup>
+
+</Project>

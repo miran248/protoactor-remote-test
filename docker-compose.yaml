@@ -1,0 +1,61 @@
+version: "3.9"
+
+services:
+  add-remote-a:
+    hostname: add-remote-a
+    environment:
+      - ADVERTISED_HOST=add-remote-a
+      - ADVERTISED_PORT=8080
+      - TARGET_PID=add-remote-b:8081
+    ports:
+      - 8080:80
+    image: add-remote
+    build:
+      context: .
+      dockerfile: AddRemote/Dockerfile
+    networks:
+      - my-network
+  add-remote-b:
+    hostname: add-remote-b
+    environment:
+      - ADVERTISED_HOST=add-remote-b
+      - ADVERTISED_PORT=8081
+      - TARGET_PID=add-remote-a:8080
+    ports:
+      - 8081:80
+    image: add-remote
+    depends_on:
+      - add-remote-a
+    networks:
+      - my-network
+  with-remote-a:
+    hostname: with-remote-a
+    environment:
+      - ADVERTISED_HOST=with-remote-a
+      - ADVERTISED_PORT=8090
+      - TARGET_PID=with-remote-b:8091
+    ports:
+      - 8090:80
+    image: with-remote
+    build:
+      context: .
+      dockerfile: WithRemote/Dockerfile
+    networks:
+      - my-network
+  with-remote-b:
+    hostname: with-remote-b
+    environment:
+      - ADVERTISED_HOST=with-remote-b
+      - ADVERTISED_PORT=8091
+      - TARGET_PID=with-remote-a:8090
+    ports:
+      - 8091:80
+    image: with-remote
+    depends_on:
+      - with-remote-a
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
