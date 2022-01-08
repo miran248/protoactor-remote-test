@@ -18,6 +18,12 @@ string advertisedHost = builder.Configuration["ADVERTISED_HOST"];
 int advertisedPort;
 int.TryParse(builder.Configuration["ADVERTISED_PORT"], out advertisedPort);
 
+var loggerFactory = LoggerFactory.Create((c) => c
+  .SetMinimumLevel(LogLevel.Trace)
+  .AddSimpleConsole()
+);
+Log.SetLoggerFactory(loggerFactory);
+
 builder.Host.ConfigureHostOptions((options) => {
   options.ShutdownTimeout = TimeSpan.FromSeconds(5);
 });

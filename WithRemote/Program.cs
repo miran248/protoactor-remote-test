@@ -12,7 +12,7 @@ int advertisedPort;
 int.TryParse(Environment.GetEnvironmentVariable("ADVERTISED_PORT"), out advertisedPort);
 
 var loggerFactory = LoggerFactory.Create((c) => c
-  .SetMinimumLevel(LogLevel.Information)
+  .SetMinimumLevel(LogLevel.Trace)
   .AddSimpleConsole()
 );
 Log.SetLoggerFactory(loggerFactory);
