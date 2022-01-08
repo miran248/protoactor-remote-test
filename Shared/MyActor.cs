@@ -41,9 +41,12 @@ public class MyActor : IActor {
           break;
         }
       case Pong pong: {
-          var response = await context.RequestAsync<object>(targetPid, new Request());
+          // limit the request to actor -a, to avoid a deadlock
+          if (targetPid.Address.EndsWith("-b:80")) {
+            var response = await context.RequestAsync<Response>(targetPid, new Request());
 
-          logger.LogInformation($"ReceiveAsync Pong response {response.GetType()}");
+            logger.LogInformation($"ReceiveAsync Pong response {response.GetType()}");
+          }
 
           context.Send(targetPid, new MessageEnvelope(new Ping(), context.Self));
           break;
